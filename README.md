@@ -4,6 +4,8 @@
 
 A bash script for uploading files to your [Neocities](https://www.neocities.org) site.
 
+Project logo modified from [A book of cheerful cats](https://www.oldbookillustrations.com/illustrations/catnip-ball/) (1892) via [Old Book Illustrations](https://www.oldbookillustrations.com/).
+
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 
