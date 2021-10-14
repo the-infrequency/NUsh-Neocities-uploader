@@ -1,91 +1,100 @@
-# NU.sh
+# Neocities Uploader Script (NU.sh)
 
-A bash script for uploading files to your Neocities site using curl and their REST API. 
+**Current version:** v.1
 
-## Getting started
+A bash script for uploading files to your [Neocities](https://www.neocities.org) site.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
-## Add your files
+## Setup
 
-- [ ] [Create](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+**1. Get a copy of the script**    
+Either use git, or just download the script file directly. Place a copy of the script in a directory (see the **issues** section of this readme, there are some limitations with using multiple scripts). Note that it can be any directory, it does not need to be the same dir as the files or subdir you want to upload (do not put the script in the same directory as the files you will upload, or it will upload a copy of itself). 
+
+**2. Make it executeable**  
+Use `chmod +x NU.sh` to make the script executeable, then run it with `./nu.sh`. Note that due to the way it creates its persistent file storage you can only use one copy of the script. If you have multiple sites you would like to upload this way, you'll have to wait until the multi-script feature is implemented.
+
+**3. Configure**  
+The first time the script is run it will automatically run the config option so you can enter all the data it needs to do it's thing (see the useage section of this readme for info about how to invoke the config option yourself later). 
+
+**4. (optional) Update hashlist**  
+If you already have a directory of files that have been uploaded to Neocities you might want to run `./NU.sh update`. This will create a hashlist of the existing files, so it will only upload modified/new files the next time you invoke the upload option in the script.  
+
+## Useage
+
+Run with `bash NU.sh [single option]` or `./NU.sh [single option]`
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/the-infrequency/neocities-uploader-script.git
-git branch -M main
-git push -uf origin main
+OPTIONS:
+	config  - configure the script.  
+	help    - display this help message.  
+	update  - updated hash list, without uploading.  
+	upload  - upload all files in the local directory (setup in config) to your Neocities site.  
+	reset	- deletes the ~/.config/NUsh directory (for a fresh start).  
+	license - copy of the license for this script (GPL v3).
 ```
 
-## Integrate with your tools
+## Known issues
 
-- [ ] [Set up project integrations](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/user/project/integrations/)
+- [ ] multiple scripts : at the moment, due to the way the `scrip_data_directory` variable is defined, you can only have one copy of the script in any given directory. So if you have multiple sites you are updating with copies of the script the script file for each site must be kept in separate directories. << could have a uid var the user can define in the script itself (the physical file) which will add that to the end of the dir name... that way you can have as many copies of the script as you want in the same dir without issue... just have a default value so if the thing isn't used it isn't a problem scriptwise??>>
 
-## Collaborate with your team
+- [ ] **!! SECURITY ISSUE !!** : If choosing the option to automate the upload (no need to enter password) the password will be stored in plain text in a file restricted to your user (chmod 600). This means anyone with root access or access to your login will be able to see the password!
 
-- [ ] [Invite team members and collaborators](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Automatically merge when pipeline succeeds](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
 
-## Test and Deploy
+## To do / planned features
 
-Use the built-in continuous integration in GitLab.
+The following is an unordered list of features and fixes I aim to add to the script. Feel free to reach out if you have any ideas or wishes. Please note that this is a hobby project though, so I may be a bit slow on responding. :)
 
-- [ ] [Get started with GitLab CI/CD](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://docs.gitlab.com/ee/user/clusters/agent/)
+**TO BE DONE:**
 
-***
+- [ ] option to define patterns of files to be ignored when uploading the site (ex. do not count files starting with 'DRAFT.*.md')
+- [ ] ability to put the script in the same directory as the files to be uploaded, without uploading the script itself.
 
-# Editing this README
+- [ ] backup, creating a single tar file containing the script, config file, hash file and (optionally) the files from the local directory. Making it a lot easier to move it all to a new computer, or restore it should there be some kind of issue.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://gitlab.com/-/experiment/new_project_readme_content:43653ae219ae0b35ef531abc7653101e?https://www.makeareadme.com/) for this template.
+- [ ] ability to have multiple copies of the script in the same directory (to update different sites) without it causing issues with the persistent file storage (alternatively be able to upload different sites with the same script).  
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+- [ ] multithreading hash calculation to handle much larger sites (shouldn't be an issue, but a fun feature none the less).  
+- [ ] automatic speed test to decide on multithreading model (if enabled).  
+- [ ] option to use [openSSL](https://www.openssl.org/) for hasing, should it provide a speed advantage over `sha1sum`.  
 
-## Name
-Choose a self-explaining name for your project.
+- [ ] mirror local and server files -- if you delete or move a file in the local directory, it is deleted/moved in the server directory.  
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+- [ ] add support for using api key in place of password (write access to site, but won't allow anyone to login as you via the web interface).  
+- [ ] add support for securing the password/api key with [openSSL](https://www.openssl.org/).  
+- [ ] add support for securing the password/api key with [GnuPG](https://gnupg.org/).  
+- [ ] add support for securing the password/api key with [pass](https://www.passwordstore.org/).  
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+**DONE:**
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+- [x] only upload modified/new files, so you don't upload every single file each time, saving on upload time and lessening the Neocities bandwith useage. (Done with a sha1 file list).
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+- [x] option to store password in file, allowing the script to be run automatically (ex. via [cron](https://en.wikipedia.org/wiki/Cron)) without the need for user interaction.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Open for suggestions and ideas. Please note that this is a hobby project though, so may be slow to respond.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## Contact 
+
+Homepage..: [https://the-infrequency.neocities.org](https://the-infrequency.neocities.org)  
+Email.....: the-infrequency@protonmail.com  
+Twitter...: [@TheInfrequency](twitter.com/TheInfrequency)  
+Matrix....: [chatroom](https://matrix.to/#/!aUKWxiALHdUvpdVmhR:matrix.org)  
+GitLab....: https://gitlab.com/the-infrequency/neocities-uploader-script  
+
 
 ## License
-For open source projects, say how it is licensed.
+NUsh  Copyright (C) 2021  Cornelius K. of the-infrequency.neocities.org. 
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain conditions.
+See the [![GPL v3 License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0) for further details.
+
 
 ## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+**ongoing** -- this is a hobby project, so it'll be slow. There is a reason for "The Infrequency" being named what it is.
 
