@@ -85,7 +85,6 @@ Open for suggestions and ideas. Please note that this is a hobby project though,
 Homepage..: [https://the-infrequency.neocities.org](https://the-infrequency.neocities.org)  
 Email.....: the-infrequency@protonmail.com  
 Twitter...: [@TheInfrequency](twitter.com/TheInfrequency)  
-Matrix....: [chatroom](https://matrix.to/#/!aUKWxiALHdUvpdVmhR:matrix.org)  
 GitLab....: https://gitlab.com/the-infrequency/neocities-uploader-script  
 
 
